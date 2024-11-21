@@ -38,7 +38,7 @@ def train_step(args, plm, cls, loss_function, optimizer, dataloader):
     return loss_total, loss_average
 
 # @title Test function
-def test_step(args, plm, cls, dataloader, confidence_score):
+def test_step(args, plm, cls, dataloader):
     plm.eval()
     cls.eval()
     labels_true, labels_pred = [], []
@@ -53,7 +53,7 @@ def test_step(args, plm, cls, dataloader, confidence_score):
 
             torch.cuda.empty_cache()
 
-            batch_labels_pred = (torch.sigmoid(logit) >= confidence_score).to(torch.int)
+            batch_labels_pred = (torch.sigmoid(logit) >= args.CONFIDENCE_SCORE).to(torch.int)
 
             labels_true.extend(labels.to(torch.int).tolist())
             labels_pred.extend(batch_labels_pred.tolist())
