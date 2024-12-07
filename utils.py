@@ -94,3 +94,10 @@ def save_models(epoch, f1_micro, f1_macro, best_epoch, best_f1_micro, best_f1_ma
                 "optimizer": optimizer.state_dict()}
         torch.save(state, MODEL_SAVE_PATH)
     return best_epoch, best_f1_micro, best_f1_macro
+
+# @title Make info file function
+def make_info_file(args, MODEL_PATH):
+    f = open(MODEL_PATH / "info.txt", "w")
+    for key, value in vars(args).items():
+        f.write(f'{key}: {value}\n')
+    f.close()
